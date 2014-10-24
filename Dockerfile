@@ -3,7 +3,6 @@ MAINTAINER Takaya Yoshida
 
 ENV IP __YOUR_IP_ADDRESS_HERE__
 ENV PW __YOUR_PASSWORD_HERE__
-ENV LOGSERVER __YOUR_LOG_SERVER_HERE__
 
 RUN yum update -y
 RUN yum install wget -y
@@ -13,6 +12,7 @@ RUN wget http://rpms.famillecollet.com/enterprise/remi-release-6.rpm ;\
     rpm -ivh epel-release-6-8.noarch.rpm remi-release-6.rpm rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
 RUN yum --enablerepo=remi,epel install sudo openssh-server syslog httpd httpd-devel php php-devel php-pear php-mysql php-gd php-mbstring php-pecl-imagick php-pecl-memcache monit mysql-server phpmyadmin -y
 
+ADD fuelphp.conf /etc/httpd/conf.d/fuelphp.conf
 ADD monit.httpd /etc/monit.d/httpd
 ADD monit.sshd /etc/monit.d/sshd
 ADD monit.mysqld /etc/monit.d/mysqld
@@ -40,6 +40,6 @@ RUN service mysqld start && \
     /usr/bin/mysqladmin -u root password "$PW"
 
 RUN cd /var/www
-RUN curl -sS https://getcomposer.org/installer | php
+RUN curl -sS https://getcomposer.org/installer | sudo php
 RUN php composer.phar create-project fuel/fuel:dev-1.7/master fuelphp
-
+RUN echo 'date.timezone = "Asia/Tokyo"' >> /etc/php.ini
