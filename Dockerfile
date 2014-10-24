@@ -39,7 +39,7 @@ RUN echo 'lamp ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/lamp
 RUN service mysqld start && \
     /usr/bin/mysqladmin -u root password "$PW"
 
+RUN echo 'date.timezone = "Asia/Tokyo"' >> /etc/php.ini
 RUN cd /var/www
 RUN curl -sS https://getcomposer.org/installer | sudo php
-RUN php composer.phar create-project fuel/fuel:dev-1.7/master fuelphp
-RUN echo 'date.timezone = "Asia/Tokyo"' >> /etc/php.ini
+RUN sudo php composer.phar create-project fuel/fuel:dev-1.7/master fuelphp
