@@ -40,5 +40,5 @@ RUN service mysqld start && \
     /usr/bin/mysqladmin -u root password "$PW"
 
 RUN echo 'date.timezone = "Asia/Tokyo"' >> /etc/php.ini
-RUN curl -sS https://getcomposer.org/installer | php
-RUN cd /var/www && php composer.phar create-project fuel/fuel:dev-1.7/master fuelphp
+ADD composer.phar /var/www/composer.phar
+RUN php /var/www/composer.phar create-project fuel/fuel:dev-1.7/master fuelphp
