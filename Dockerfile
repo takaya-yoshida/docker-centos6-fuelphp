@@ -41,4 +41,4 @@ RUN service mysqld start && \
 
 RUN echo 'date.timezone = "Asia/Tokyo"' >> /etc/php.ini
 ADD composer.phar /var/www/composer.phar
-RUN php /var/www/composer.phar create-project fuel/fuel:dev-1.7/master fuelphp
+RUN php /var/www/composer.phar create-project fuel/fuel:dev-1.7/master /var/www/fuelphp
